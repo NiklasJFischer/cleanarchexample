@@ -60,6 +60,7 @@ public class MessageController : ApiController
     public ActionResult<MessageDTO> CreateMessage(CreateMessageRequest request)
     {
         Message msg = new() { Id = Guid.NewGuid(), AuthorId = UserContext.UserId, Text = request.Text, Created = DateTime.UtcNow };
+
         StatusCode statusCode = Enums.StatusCode.Success;
         string resultMessage = "";
 
@@ -76,12 +77,20 @@ public class MessageController : ApiController
                 resultMessage = $"User with id {UserContext.UserId} does not exist";
             }
 
-            msg = new() { AuthorId = UserContext.UserId, Text = request.Text, Created = DateTime.UtcNow };
             MessageStorage.messages.Add(msg);
+
+            Message? savedMsg = GetMessageById(msg.Id);
+
+            if (savedMsg == null)
+            {
+                statusCode = Enums.StatusCode.Error;
+                resultMessage = "Message not created";
+            }
 
             var user = UserController.GetUserByIdInternal(UserContext.UserId);
             if (user != null)
             {
+                msg.Author = UserController.GetUserByIdInternal(UserContext.UserId);
                 var auditLog = new Log() { Title = $"Command CreateMessage executed by {user.Name}.", Description = $"UserId: {user.Id}", Timestamp = DateTime.UtcNow };
                 LogController.AddLog(auditLog);
                 AddLogToConsole(auditLog);
@@ -112,6 +121,24 @@ public class MessageController : ApiController
             Created = message.Created.ToString(),
             Author = UserController.ToUserDTO(message.Author)
         };
+    }
+
+    public static Message? GetMessageById(Guid id)
+    {
+        var matches = MessageStorage.messages.Where(m => m.Id.Equals(id));
+
+        if (!matches.Any())
+        {
+            return null;
+        }
+
+        return matches.Select(m =>
+        {
+            m.Author = UserController.GetUserByIdInternal(m.AuthorId);
+            return m;
+        }).First();
+
+
     }
 
 

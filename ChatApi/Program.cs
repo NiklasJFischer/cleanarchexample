@@ -8,12 +8,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(SetupTokenBearer());
+    .AddJwtBearer(SetupTokenBearer);
 builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(SetupSwagger);
 
 var app = builder.Build();
 
@@ -33,20 +33,18 @@ app.MapControllers();
 app.Run();
 
 
-static Action<SwaggerGenOptions> SetupSwagger()
+static void SetupSwagger(SwaggerGenOptions options)
 {
-    return options =>
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-        {
-            In = ParameterLocation.Header,
-            Description = "Please enter a valid token",
-            Name = "Authorization",
-            Type = SecuritySchemeType.Http,
-            BearerFormat = "JWT",
-            Scheme = "Bearer"
-        });
-        options.AddSecurityRequirement(new OpenApiSecurityRequirement
+        In = ParameterLocation.Header,
+        Description = "Please enter a valid token",
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        BearerFormat = "JWT",
+        Scheme = "Bearer"
+    });
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
             new OpenApiSecurityScheme
@@ -60,23 +58,19 @@ static Action<SwaggerGenOptions> SetupSwagger()
             Array.Empty<string>()
         }
     });
-    };
 }
 
-static Action<JwtBearerOptions> SetupTokenBearer()
+static void SetupTokenBearer(JwtBearerOptions options)
 {
-    return options =>
+    options.TokenValidationParameters = new TokenValidationParameters
     {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = "MY_JWT_ISSUER",
-            ValidAudience = "MY_JWT_AUDIENCE",
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("MY_VERY_SECRET_AND_HARD_TO_GUESS_JWT_KEY_0123456789")),
-            ClockSkew = TimeSpan.Zero
-        };
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = "MY_JWT_ISSUER",
+        ValidAudience = "MY_JWT_AUDIENCE",
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("MY_VERY_SECRET_AND_HARD_TO_GUESS_JWT_KEY_0123456789")),
+        ClockSkew = TimeSpan.Zero
     };
 }

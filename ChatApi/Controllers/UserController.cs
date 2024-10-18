@@ -1,7 +1,7 @@
-﻿using ChatApi.Data;
-using ChatApi.DTO;
-using ChatApi.Entities;
-using ChatApi.Enums;
+﻿using ChatApi.DTO;
+using ChatAPI.Domain.Entities;
+using ChatAPI.Domain.Enums;
+using ChatAPI.InMemoryRepository.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -23,7 +23,7 @@ public class UserController : ApiController
     public ActionResult<LoginResponse> Login(LoginRequest request)
     {
         string jwtToken = "";
-        StatusCode statusCode = Enums.StatusCode.Success;
+        StatusCode statusCode = ChatAPI.Domain.Enums.StatusCode.Success;
         string resultMessage = "";
 
         try
@@ -31,13 +31,13 @@ public class UserController : ApiController
 
             if (string.IsNullOrWhiteSpace(request.Email))
             {
-                statusCode = Enums.StatusCode.ValidationFailed;
+                statusCode = ChatAPI.Domain.Enums.StatusCode.ValidationFailed;
                 resultMessage = "Email is null";
             }
 
             if (string.IsNullOrWhiteSpace(request.Password))
             {
-                statusCode = Enums.StatusCode.ValidationFailed;
+                statusCode = ChatAPI.Domain.Enums.StatusCode.ValidationFailed;
                 resultMessage = "Password is null";
             }
 
@@ -46,7 +46,7 @@ public class UserController : ApiController
 
             if (user == null)
             {
-                statusCode = Enums.StatusCode.ValidationFailed;
+                statusCode = ChatAPI.Domain.Enums.StatusCode.ValidationFailed;
                 resultMessage = "Invalid email";
             }
             else
@@ -55,7 +55,7 @@ public class UserController : ApiController
 
                 if (!user.PasswordHash.Equals(hash))
                 {
-                    statusCode = Enums.StatusCode.ValidationFailed;
+                    statusCode = ChatAPI.Domain.Enums.StatusCode.ValidationFailed;
                     resultMessage = "Invalid password";
                 }
 
@@ -67,7 +67,7 @@ public class UserController : ApiController
             var exLog = new Log() { Title = $"Login failed with unhandled error.", Description = ex.Message, Timestamp = DateTime.UtcNow };
             LogController.AddLog(exLog);
             AddLogToConsole(exLog);
-            statusCode = Enums.StatusCode.Error;
+            statusCode = ChatAPI.Domain.Enums.StatusCode.Error;
         }
 
         var log = new Log() { Title = $"Command Login executed.", Description = $"Authenticated: {UserContext.HasUserId}, StatusCode: {statusCode}", Timestamp = DateTime.UtcNow };

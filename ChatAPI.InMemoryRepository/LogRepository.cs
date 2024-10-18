@@ -1,17 +1,12 @@
 ﻿using ChatAPI.Domain.Entities;
+using ChatAPI.InMemoryRepository.Abstractions;
 using ChatAPI.InMemoryRepository.Data;
-using Microsoft.AspNetCore.Mvc;
 
-namespace ChatApi.Controllers;
+namespace ChatAPI.InMemoryRepository;
 
-[ApiController]
-[Route("[controller]")]
-
-public class LogController : ApiController
+public class LogRepository : ILogRepository
 {
-
-
-    public static void AddLog(Log log)
+    public void AddLog(Log log)
     {
         ArgumentNullException.ThrowIfNull(log, nameof(log));
 

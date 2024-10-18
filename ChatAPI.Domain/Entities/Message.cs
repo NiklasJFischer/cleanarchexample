@@ -1,4 +1,4 @@
-﻿namespace ChatApi.Entities;
+﻿namespace ChatAPI.Domain.Entities;
 
 public class Message
 {

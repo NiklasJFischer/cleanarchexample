@@ -6,6 +6,6 @@ namespace ChatAPI.Application.Abstractions
     public interface IMessageService
     {
         ServiceResult<Message> CreateMessage(UserContext userContext, string text);
-        ServiceResult<IEnumerable<Message>> GetMessages();
+        ServiceResult<IEnumerable<Message>> GetMessages(UserContext userContext);
     }
 }

@@ -7,10 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ChatAPI.DateTimeProvider\ChatAPI.DateTime.csproj" />
     <ProjectReference Include="..\ChatAPI.Domain\ChatAPI.Domain.csproj" />
-    <ProjectReference Include="..\ChatAPI.Hashing\ChatAPI.Hashing.csproj" />
-    <ProjectReference Include="..\ChatAPI.InMemoryRepository\ChatAPI.InMemoryRepository.csproj" />
-    <ProjectReference Include="..\ChatAPI.Tokens\ChatAPI.Tokens.csproj" />
   </ItemGroup>
 
 </Project>

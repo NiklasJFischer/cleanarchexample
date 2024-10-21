@@ -9,6 +9,12 @@ namespace ChatAPI.Application.Core
 
         public string Message { get; set; }
 
+        public ServiceResult()
+        {
+            StatusCode = StatusCode.Error;
+            Message = string.Empty;
+        }
+
         public ServiceResult(TResult result)
         {
             Result = result;

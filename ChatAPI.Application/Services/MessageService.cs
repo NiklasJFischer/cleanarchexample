@@ -2,6 +2,8 @@
 using ChatApi.ConsoleLogging.Abstractions;
 using ChatAPI.Application.Abstractions;
 using ChatAPI.Application.Core;
+using ChatAPI.DateTime;
+using ChatAPI.DateTime.Abstractions;
 using ChatAPI.Domain.Entities;
 using ChatAPI.Domain.Enums;
 using ChatAPI.InMemoryRepository;
@@ -13,38 +15,35 @@ namespace ChatAPI.Application.Services
     public class MessageService : IMessageService
     {
         private readonly IMessageRepository messageRepository = new MessageRepository();
+        private readonly IDateTimeProvider dateTimeProvider = new DateTimeProvider();
         private readonly IUserRepository userRepository = new UserRepository();
         private readonly ILogRepository logRepository = new LogRepository();
         private readonly IConsoleLogger consoleLogger = new ConsoleLogger();
 
         public ServiceResult<Message> CreateMessage(UserContext userContext, string text)
         {
-            Message msg = new() { Id = Guid.NewGuid(), AuthorId = userContext.UserId, Text = text, Created = DateTime.UtcNow };
-
-            StatusCode statusCode = ChatAPI.Domain.Enums.StatusCode.Success;
-            string resultMessage = "";
+            ServiceResult<Message> result;
 
             try
             {
                 if (!userContext.HasUserId)
                 {
-                    statusCode = ChatAPI.Domain.Enums.StatusCode.NotAuthenticated;
+                    result = new ServiceResult<Message>(StatusCode.NotAuthenticated, "Not authenticated");
                 }
 
                 if (!userRepository.UserWithIdExists(userContext.UserId))
                 {
-                    statusCode = ChatAPI.Domain.Enums.StatusCode.ValidationFailed;
-                    resultMessage = $"User with id {userContext.UserId} does not exist";
+                    result = new ServiceResult<Message>(StatusCode.ValidationFailed, $"User with id {userContext.UserId} does not exist");
                 }
 
+                Message msg = new() { Id = Guid.NewGuid(), AuthorId = userContext.UserId, Text = text, Created = dateTimeProvider.UtcNow };
                 MessageStorage.messages.Add(msg);
 
                 Message? savedMsg = messageRepository.GetMessageById(msg.Id);
 
                 if (savedMsg == null)
                 {
-                    statusCode = ChatAPI.Domain.Enums.StatusCode.Error;
-                    resultMessage = "Message not created";
+                    result = new ServiceResult<Message>(ChatAPI.Domain.Enums.StatusCode.Error, "Message not created");
                 }
 
                 var user = userRepository.GetUserById(userContext.UserId);
@@ -64,7 +63,7 @@ namespace ChatAPI.Application.Services
                 statusCode = ChatAPI.Domain.Enums.StatusCode.Error;
             }
 
-            var log = new Log() { Title = $"Command CreateMessage executed.", Description = $"Authenticated: {UserContext.HasUserId}, StatusCode: {statusCode}", Timestamp = DateTime.UtcNow };
+            var log = new Log() { Title = $"Command CreateMessage executed.", Description = $"Authenticated: {userContext.HasUserId}, StatusCode: {statusCode}", Timestamp = DateTime.UtcNow };
             logRepository.AddLog(log);
             consoleLogger.AddLog(log);
 
@@ -109,7 +108,7 @@ namespace ChatAPI.Application.Services
                 statusCode = ChatAPI.Domain.Enums.StatusCode.Error;
             }
 
-            var log = new Log() { Title = $"Command GetMessages executed.", Description = $"Authenticated: {UserContext.HasUserId}, StatusCode: {statusCode}", Timestamp = DateTime.UtcNow };
+            var log = new Log() { Title = $"Command GetMessages executed.", Description = $"Authenticated: {userContext.HasUserId}, StatusCode: {statusCode}", Timestamp = DateTime.UtcNow };
             logRepository.AddLog(log);
             consoleLogger.AddLog(log);
 

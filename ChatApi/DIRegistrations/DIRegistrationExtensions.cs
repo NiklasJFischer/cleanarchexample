@@ -18,24 +18,24 @@ namespace ChatApi.DIRegistrations
         public static void AddApplicationDependencies(this IServiceCollection services)
         {
             services.AddRepositories();
-            services.AddCommandServices();
-            services.AddProviders();
+            services.AddApplicationServices();
+            services.AddApplicationProviders();
         }
 
-        public static void AddRepositories(this IServiceCollection services)
+        private static void AddRepositories(this IServiceCollection services)
         {
 
             services.AddScoped<ILogRepository, LogRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IMessageRepository, MessageRepository>();
         }
-        public static void AddCommandServices(this IServiceCollection services)
+        private static void AddApplicationServices(this IServiceCollection services)
         {
             services.AddScoped<IMessageService, MessageService>();
             services.AddScoped<IUserService, UserService>();
         }
 
-        public static void AddProviders(this IServiceCollection services)
+        private static void AddApplicationProviders(this IServiceCollection services)
         {
             services.AddScoped<ITokenProvider, TokenProvider>();
             services.AddScoped<IDateTimeProvider, DateTimeProvider>();

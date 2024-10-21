@@ -35,32 +35,34 @@ public class UserController : ApiController
                 resultMessage = "Email is null";
             }
 
-            if (string.IsNullOrWhiteSpace(request.Password))
+            if (statusCode == Enums.StatusCode.Success && string.IsNullOrWhiteSpace(request.Password))
             {
                 statusCode = Enums.StatusCode.ValidationFailed;
                 resultMessage = "Password is null";
             }
 
-
-            User? user = GetUserByEmail(request.Email);
-
-            if (user == null)
+            if (statusCode == Enums.StatusCode.Success)
             {
-                statusCode = Enums.StatusCode.ValidationFailed;
-                resultMessage = "Invalid email";
-            }
-            else
-            {
-                string hash = GenerateHashByPasswordAndSalt(request.Password, user.PasswordSalt);
-
-                if (!user.PasswordHash.Equals(hash))
+                User? user = GetUserByEmail(request.Email);
+                if (user == null)
                 {
                     statusCode = Enums.StatusCode.ValidationFailed;
-                    resultMessage = "Invalid password";
+                    resultMessage = "Invalid email";
                 }
+                else
+                {
+                    string hash = GenerateHashByPasswordAndSalt(request.Password, user.PasswordSalt);
 
-                jwtToken = CreateToken(user);
+                    if (!user.PasswordHash.Equals(hash))
+                    {
+                        statusCode = Enums.StatusCode.ValidationFailed;
+                        resultMessage = "Invalid password";
+                    }
+
+                    jwtToken = CreateToken(user);
+                }
             }
+
         }
         catch (Exception ex)
         {

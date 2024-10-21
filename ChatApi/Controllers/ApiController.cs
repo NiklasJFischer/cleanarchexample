@@ -1,5 +1,6 @@
 ﻿using ChatAPI.Application.Core;
-using ChatAPI.Domain.Enums;
+using ChatAPI.Domain.Entities;
+using ChatAPI.Presenters.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
@@ -37,29 +38,29 @@ public class ApiController : ControllerBase
         }
     }
 
-    public ActionResult<IEnumerable<TDTO>> ToActionResultEnumerable<TResult, TDTO>(StatusCode statusCode, Func<TResult, TDTO> toDTOFn, IEnumerable<TResult>? result, string validationMessage)
+    public ActionResult<IEnumerable<TViewModel>> PresentEnumerable<TResult, TViewModel>(ServiceResult<IEnumerable<TResult>> serviceResult, IPresenter<TViewModel, TResult> presenter)
     {
-        result ??= [];
-        return ToActionResult(statusCode, (IEnumerable<TResult> results) => result.Select(toDTOFn), result, validationMessage);
+        return Present(serviceResult, new EnumerablePresenter<TViewModel, TResult>(presenter));
     }
-    public ActionResult<TDTO> ToActionResult<TResult, TDTO>(StatusCode statusCode, Func<TResult, TDTO> toDTOFn, TResult result, string validationMessage)
+
+    public ActionResult<TViewModel> Present<TResult, TViewModel>(ServiceResult<TResult> serviceResult, IPresenter<TViewModel, TResult> presenter)
     {
-        switch (statusCode)
+        switch (serviceResult.StatusCode)
         {
             case ChatAPI.Domain.Enums.StatusCode.Success:
-                if (result == null)
+                if (serviceResult.Result == null)
                 {
                     return new StatusCodeResult(500);
                 }
                 else
                 {
-                    return Ok(toDTOFn(result));
+                    return Ok(presenter.Present(serviceResult.Result));
                 }
 
             case ChatAPI.Domain.Enums.StatusCode.Error:
                 return new StatusCodeResult(500);
             case ChatAPI.Domain.Enums.StatusCode.ValidationFailed:
-                return ValidationProblem(validationMessage);
+                return ValidationProblem(serviceResult.Message);
             case ChatAPI.Domain.Enums.StatusCode.NotAuthorized:
             case ChatAPI.Domain.Enums.StatusCode.NotAuthenticated:
             default:

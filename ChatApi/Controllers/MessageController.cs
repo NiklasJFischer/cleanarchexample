@@ -19,7 +19,6 @@ public class MessageController : ApiController
     [HttpGet(Name = "GetMessages")]
     public ActionResult<IEnumerable<MessageDTO>> Get()
     {
-        var result = messageService.GetMessages(UserContext);
         return PresentEnumerable(messageService.GetMessages(UserContext), new MessagePresenter());
 
     }

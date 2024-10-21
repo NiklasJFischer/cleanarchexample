@@ -18,7 +18,6 @@ public class UserController : ApiController
     [HttpPost(Name = "Login")]
     public ActionResult<LoginResponse> Login(LoginRequest request)
     {
-        var result = userService.LoginUser(UserContext, request.Email, request.Password);
         return Present(userService.LoginUser(UserContext, request.Email, request.Password), new LoginPresenter());
     }
 

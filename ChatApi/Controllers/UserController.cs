@@ -1,5 +1,4 @@
 ﻿using ChatAPI.Application.Abstractions;
-using ChatAPI.Application.Services;
 using ChatAPI.Domain.Entities;
 using ChatAPI.Presenters.DTO;
 using Microsoft.AspNetCore.Mvc;
@@ -11,9 +10,8 @@ namespace ChatApi.Controllers;
 [ApiController]
 [Route("[controller]")]
 
-public class UserController : ApiController
+public class UserController(IUserService userService) : ApiController
 {
-    private readonly IUserService userService = new UserService();
 
     [HttpPost(Name = "Login")]
     public ActionResult<LoginResponse> Login(LoginRequest request)

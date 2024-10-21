@@ -1,28 +1,17 @@
-﻿using ChatApi.ConsoleLogging;
-using ChatApi.ConsoleLogging.Abstractions;
+﻿using ChatApi.ConsoleLogging.Abstractions;
 using ChatAPI.Application.Abstractions;
 using ChatAPI.Application.Core;
-using ChatAPI.DateTime;
 using ChatAPI.DateTime.Abstractions;
 using ChatAPI.Domain.Entities;
 using ChatAPI.Domain.Enums;
-using ChatAPI.Hashing;
 using ChatAPI.Hashing.Abstractions;
-using ChatAPI.InMemoryRepository;
 using ChatAPI.InMemoryRepository.Abstractions;
-using ChatAPI.Tokens;
 using ChatAPI.Tokens.Abstractions;
 
 namespace ChatAPI.Application.Services;
 
-public class UserService : IUserService
+public class UserService(IUserRepository userRepository, IHashProvider hashProvider, ITokenProvider tokenProvider, ILogRepository logRepository, IConsoleLogger consoleLogger, IDateTimeProvider dateTimeProvider) : IUserService
 {
-    private readonly IUserRepository userRepository = new UserRepository();
-    private readonly IHashProvider hashProvider = new HashProvider();
-    private readonly ITokenProvider tokenProvider = new TokenProvider();
-    private readonly ILogRepository logRepository = new LogRepository();
-    private readonly IConsoleLogger consoleLogger = new ConsoleLogger();
-    private readonly IDateTimeProvider dateTimeProvider = new DateTimeProvider();
 
     public ServiceResult<string> LoginUser(UserContext userContext, string email, string password)
     {

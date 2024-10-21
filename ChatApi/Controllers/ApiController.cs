@@ -1,25 +1,13 @@
 ﻿using ChatAPI.Application.Core;
-using ChatAPI.Domain.Entities;
 using ChatAPI.Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using System.Diagnostics;
 using System.Security.Claims;
 
 namespace ChatApi.Controllers;
 
 public class ApiController : ControllerBase
 {
-    protected void AddLogToConsole(Log log)
-    {
-        ArgumentNullException.ThrowIfNull(log, nameof(log));
-
-        Debug.WriteLine("");
-        Debug.WriteLine(log.Timestamp);
-        Debug.WriteLine(log.Title);
-        Debug.WriteLine(log.Description);
-        Debug.WriteLine("");
-    }
 
     public UserContext UserContext
     {

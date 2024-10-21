@@ -1,23 +1,15 @@
-﻿using ChatApi.ConsoleLogging;
-using ChatApi.ConsoleLogging.Abstractions;
+﻿using ChatApi.ConsoleLogging.Abstractions;
 using ChatAPI.Application.Abstractions;
 using ChatAPI.Application.Core;
-using ChatAPI.DateTime;
 using ChatAPI.DateTime.Abstractions;
 using ChatAPI.Domain.Entities;
 using ChatAPI.Domain.Enums;
-using ChatAPI.InMemoryRepository;
 using ChatAPI.InMemoryRepository.Abstractions;
 
 namespace ChatAPI.Application.Services;
 
-public class MessageService : IMessageService
+public class MessageService(IMessageRepository messageRepository, IDateTimeProvider dateTimeProvider, IUserRepository userRepository, ILogRepository logRepository, IConsoleLogger consoleLogger) : IMessageService
 {
-    private readonly IMessageRepository messageRepository = new MessageRepository();
-    private readonly IDateTimeProvider dateTimeProvider = new DateTimeProvider();
-    private readonly IUserRepository userRepository = new UserRepository();
-    private readonly ILogRepository logRepository = new LogRepository();
-    private readonly IConsoleLogger consoleLogger = new ConsoleLogger();
 
     public ServiceResult<Message> CreateMessage(UserContext userContext, string text)
     {

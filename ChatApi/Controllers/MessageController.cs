@@ -1,6 +1,5 @@
 ﻿
 using ChatAPI.Application.Abstractions;
-using ChatAPI.Application.Services;
 using ChatAPI.Domain.Entities;
 using ChatAPI.Presenters.DTO;
 using Microsoft.AspNetCore.Authorization;
@@ -10,11 +9,8 @@ namespace ChatApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class MessageController : ApiController
+public class MessageController(IMessageService messageService) : ApiController
 {
-
-    private readonly IMessageService messageService = new MessageService();
-
 
     [HttpGet(Name = "GetMessages")]
     public ActionResult<IEnumerable<MessageDTO>> Get()

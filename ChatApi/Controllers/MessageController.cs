@@ -64,15 +64,52 @@ public class MessageController : ApiController
     [Authorize()]
     public ActionResult<MessageDTO> CreateMessage(CreateMessageRequest request)
     {
-        ServiceResult<Message> msg = messageService.CreateMessage(UserContext, request.Text);
-        return ToActionResult(msg.StatusCode, ToMemberDTO, msg.Result, msg.Message);
-    }
+        Message msg = new() { Id = Guid.NewGuid(), AuthorId = UserContext.UserId, Text = request.Text, Created = DateTime.UtcNow };
+        StatusCode statusCode = Enums.StatusCode.Success;
+        string resultMessage = "";
 
-    public static MessageDTO ToMemberDTO(Message? message)
-    {
-        if (message == null)
+        try
         {
-            throw new ArgumentNullException(nameof(message));
+            if (!UserContext.HasUserId)
+            {
+                statusCode = Enums.StatusCode.NotAuthenticated;
+            }
+            }
+            if (statusCode != Enums.StatusCode.Success && !UserController.UserWithIdExists(UserContext.UserId))
+            {
+                statusCode = Enums.StatusCode.ValidationFailed;
+                resultMessage = $"User with id {UserContext.UserId} does not exist";
+            }
+
+            MessageStorage.messages.Add(msg);
+
+            Message? savedMsg = GetMessageById(msg.Id);
+
+            if (savedMsg == null)
+            {
+                statusCode = Enums.StatusCode.Error;
+                resultMessage = "Message not created";
+            }
+
+            if (statusCode == Enums.StatusCode.Success)
+            {
+                var user = UserController.GetUserByIdInternal(UserContext.UserId);
+                if (user != null)
+                {
+                    msg.Author = UserController.GetUserByIdInternal(UserContext.UserId);
+                    var auditLog = new Log() { Title = $"Command CreateMessage executed by {user.Name}.", Description = $"UserId: {user.Id}", Timestamp = DateTime.UtcNow };
+                    LogController.AddLog(auditLog);
+                    AddLogToConsole(auditLog);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            var exLog = new Log() { Title = $"CreateMessage failed with unhandled error.", Description = ex.Message, Timestamp = DateTime.UtcNow };
+            LogController.AddLog(exLog);
+            AddLogToConsole(exLog);
+            statusCode = Enums.StatusCode.Error;
+            statusCode = Enums.StatusCode.Error;
         }
 
         return new MessageDTO

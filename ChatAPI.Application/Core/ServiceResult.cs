@@ -1,31 +1,31 @@
 ﻿using ChatAPI.Domain.Enums;
 
-namespace ChatAPI.Application.Core
+namespace ChatAPI.Application.Core;
+
+public class ServiceResult<TResult>
 {
-    public class ServiceResult<TResult>
+    public TResult? Result { get; set; }
+    public StatusCode StatusCode { get; set; }
+
+    public string Message { get; set; }
+
+    public ServiceResult(TResult result)
     {
-        public TResult? Result { get; set; }
-        public StatusCode StatusCode { get; set; }
+        Result = result;
+        StatusCode = StatusCode.Success;
+        Message = string.Empty;
+    }
 
-        public string Message { get; set; }
+    public ServiceResult(StatusCode statusCode, string message)
+    {
+        StatusCode = statusCode;
+        Message = message;
+    }
 
-        public ServiceResult()
-        {
-            StatusCode = StatusCode.Error;
-            Message = string.Empty;
-        }
-
-        public ServiceResult(TResult result)
-        {
-            Result = result;
-            StatusCode = StatusCode.Success;
-            Message = string.Empty;
-        }
-
-        public ServiceResult(StatusCode statusCode, string message)
-        {
-            StatusCode = statusCode;
-            Message = message;
-        }
+    public ServiceResult(TResult? result, StatusCode statusCode, string message)
+    {
+        Result = result;
+        StatusCode = statusCode;
+        Message = message;
     }
 }

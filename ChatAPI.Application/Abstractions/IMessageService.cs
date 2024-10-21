@@ -1,11 +1,10 @@
 ﻿using ChatAPI.Application.Core;
 using ChatAPI.Domain.Entities;
 
-namespace ChatAPI.Application.Abstractions
+namespace ChatAPI.Application.Abstractions;
+
+public interface IMessageService
 {
-    public interface IMessageService
-    {
-        ServiceResult<Message> CreateMessage(UserContext userContext, string text);
-        ServiceResult<IEnumerable<Message>> GetMessages(UserContext userContext);
-    }
+    ServiceResult<Message> CreateMessage(UserContext userContext, string text);
+    ServiceResult<IEnumerable<Message>> GetMessages(UserContext userContext);
 }

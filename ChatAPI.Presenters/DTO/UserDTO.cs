@@ -1,4 +1,4 @@
-﻿namespace ChatApi.DTO;
+﻿namespace ChatAPI.Presenters.DTO;
 
 public class UserDTO
 {

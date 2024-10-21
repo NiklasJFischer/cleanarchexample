@@ -1,9 +1,8 @@
 ﻿using ChatAPI.DateTime.Abstractions;
 
-namespace ChatAPI.DateTime
+namespace ChatAPI.DateTime;
+
+public class DateTimeProvider : IDateTimeProvider
 {
-    public class DateTimeProvider : IDateTimeProvider
-    {
-        public System.DateTime UtcNow => System.DateTime.UtcNow;
-    }
+    public System.DateTime UtcNow => System.DateTime.UtcNow;
 }

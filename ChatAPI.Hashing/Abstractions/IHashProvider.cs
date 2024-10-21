@@ -1,8 +1,7 @@
-﻿namespace ChatAPI.Hashing.Abstractions
+﻿namespace ChatAPI.Hashing.Abstractions;
+
+public interface IHashProvider
 {
-    public interface IHashProvider
-    {
-        string GenerateHashByPasswordAndSalt(string password, string salt);
-        void CreatePassword(string password, out string hash, out string salt);
-    }
+    string GenerateHashByPasswordAndSalt(string password, string salt);
+    void CreatePassword(string password, out string hash, out string salt);
 }

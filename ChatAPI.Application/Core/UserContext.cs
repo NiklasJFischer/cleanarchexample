@@ -1,9 +1,8 @@
-﻿namespace ChatAPI.Application.Core
-{
-    public class UserContext
-    {
-        public Guid UserId { get; set; }
+﻿namespace ChatAPI.Application.Core;
 
-        public bool HasUserId { get { return UserId != Guid.Empty; } }
-    }
+public class UserContext
+{
+    public Guid UserId { get; set; }
+
+    public bool HasUserId { get { return UserId != Guid.Empty; } }
 }

@@ -1,9 +1,8 @@
 ﻿using ChatAPI.Domain.Entities;
 
-namespace ChatApi.ConsoleLogging.Abstractions
+namespace ChatApi.ConsoleLogging.Abstractions;
+
+public interface IConsoleLogger
 {
-    public interface IConsoleLogger
-    {
-        public void AddLog(Log log);
-    }
+    public void AddLog(Log log);
 }

@@ -3,23 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatApi", "ChatApi.csproj", "{171E8566-679E-4EC1-BB35-466FDC576339}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatApi", "ChatApi.csproj", "{171E8566-679E-4EC1-BB35-466FDC576339}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatAPI.Domain", "..\ChatAPI.Domain\ChatAPI.Domain.csproj", "{36DD14FF-17D5-4B9E-928B-6B1AD613E98F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatAPI.Domain", "..\ChatAPI.Domain\ChatAPI.Domain.csproj", "{36DD14FF-17D5-4B9E-928B-6B1AD613E98F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatAPI.Application", "..\ChatAPI.Application\ChatAPI.Application.csproj", "{A68DD1D3-FE14-419D-9118-1AB4A609FBAE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatAPI.Application", "..\ChatAPI.Application\ChatAPI.Application.csproj", "{A68DD1D3-FE14-419D-9118-1AB4A609FBAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatAPI.InMemoryRepository", "..\ChatAPI.InMemoryRepository\ChatAPI.InMemoryRepository.csproj", "{6A47041C-A02C-47D2-A2F9-E2610009FD79}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatAPI.InMemoryRepository", "..\ChatAPI.InMemoryRepository\ChatAPI.InMemoryRepository.csproj", "{6A47041C-A02C-47D2-A2F9-E2610009FD79}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{DCEC3FF9-AF58-400F-920A-A1D47B916374}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatApi.ConsoleLogging", "..\ChatApi.ConsoleLogging\ChatApi.ConsoleLogging.csproj", "{3D51E9BB-907D-48C5-A311-08416F475D60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatApi.ConsoleLogging", "..\ChatApi.ConsoleLogging\ChatApi.ConsoleLogging.csproj", "{3D51E9BB-907D-48C5-A311-08416F475D60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatAPI.Hashing", "..\ChatAPI.Hashing\ChatAPI.Hashing.csproj", "{3816A8E0-AD78-4D95-B629-A1D771BD4046}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatAPI.Hashing", "..\ChatAPI.Hashing\ChatAPI.Hashing.csproj", "{3816A8E0-AD78-4D95-B629-A1D771BD4046}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatAPI.Tokens", "..\ChatAPI.Tokens\ChatAPI.Tokens.csproj", "{990F49C0-090E-4E9E-8487-DC0F7A40A1B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatAPI.Tokens", "..\ChatAPI.Tokens\ChatAPI.Tokens.csproj", "{990F49C0-090E-4E9E-8487-DC0F7A40A1B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatAPI.DateTime", "..\ChatAPI.DateTimeProvider\ChatAPI.DateTime.csproj", "{AC8085ED-C4D1-4E49-9ACB-3D08F192BB8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatAPI.DateTime", "..\ChatAPI.DateTimeProvider\ChatAPI.DateTime.csproj", "{AC8085ED-C4D1-4E49-9ACB-3D08F192BB8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatAPI.Presenters", "..\ChatAPI.Presenters\ChatAPI.Presenters.csproj", "{7B6E5AD0-5985-4F7F-BED8-A933B5760F99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +61,10 @@ Global
 		{AC8085ED-C4D1-4E49-9ACB-3D08F192BB8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC8085ED-C4D1-4E49-9ACB-3D08F192BB8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC8085ED-C4D1-4E49-9ACB-3D08F192BB8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B6E5AD0-5985-4F7F-BED8-A933B5760F99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B6E5AD0-5985-4F7F-BED8-A933B5760F99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B6E5AD0-5985-4F7F-BED8-A933B5760F99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B6E5AD0-5985-4F7F-BED8-A933B5760F99}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

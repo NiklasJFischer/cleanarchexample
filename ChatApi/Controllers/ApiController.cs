@@ -49,8 +49,9 @@ public class ApiController : ControllerBase
         }
     }
 
-    public ActionResult<IEnumerable<TDTO>> ToActionResultEnumerable<TResult, TDTO>(StatusCode statusCode, Func<TResult, TDTO> toDTOFn, IEnumerable<TResult> result, string validationMessage)
+    public ActionResult<IEnumerable<TDTO>> ToActionResultEnumerable<TResult, TDTO>(StatusCode statusCode, Func<TResult, TDTO> toDTOFn, IEnumerable<TResult>? result, string validationMessage)
     {
+        result ??= [];
         return ToActionResult(statusCode, (IEnumerable<TResult> results) => result.Select(toDTOFn), result, validationMessage);
     }
     public ActionResult<TDTO> ToActionResult<TResult, TDTO>(StatusCode statusCode, Func<TResult, TDTO> toDTOFn, TResult result, string validationMessage)

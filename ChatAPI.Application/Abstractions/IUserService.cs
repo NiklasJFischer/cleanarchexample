@@ -1,9 +1,8 @@
 ﻿using ChatAPI.Application.Core;
 
-namespace ChatAPI.Application.Abstractions
+namespace ChatAPI.Application.Abstractions;
+
+public interface IUserService
 {
-    public interface IUserService
-    {
-        ServiceResult<string> LoginUser(string email, string password);
-    }
+    ServiceResult<string> LoginUser(UserContext userContext, string email, string password);
 }

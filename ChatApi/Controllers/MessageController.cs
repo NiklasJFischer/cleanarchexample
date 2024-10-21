@@ -60,7 +60,6 @@ public class MessageController : ApiController
     public ActionResult<MessageDTO> CreateMessage(CreateMessageRequest request)
     {
         Message msg = new() { Id = Guid.NewGuid(), AuthorId = UserContext.UserId, Text = request.Text, Created = DateTime.UtcNow };
-
         StatusCode statusCode = Enums.StatusCode.Success;
         string resultMessage = "";
 
@@ -71,7 +70,7 @@ public class MessageController : ApiController
                 statusCode = Enums.StatusCode.NotAuthenticated;
             }
 
-            if (!UserController.UserWithIdExists(UserContext.UserId))
+            if (statusCode != Enums.StatusCode.Success && !UserController.UserWithIdExists(UserContext.UserId))
             {
                 statusCode = Enums.StatusCode.ValidationFailed;
                 resultMessage = $"User with id {UserContext.UserId} does not exist";
@@ -87,13 +86,16 @@ public class MessageController : ApiController
                 resultMessage = "Message not created";
             }
 
-            var user = UserController.GetUserByIdInternal(UserContext.UserId);
-            if (user != null)
+            if (statusCode == Enums.StatusCode.Success)
             {
-                msg.Author = UserController.GetUserByIdInternal(UserContext.UserId);
-                var auditLog = new Log() { Title = $"Command CreateMessage executed by {user.Name}.", Description = $"UserId: {user.Id}", Timestamp = DateTime.UtcNow };
-                LogController.AddLog(auditLog);
-                AddLogToConsole(auditLog);
+                var user = UserController.GetUserByIdInternal(UserContext.UserId);
+                if (user != null)
+                {
+                    msg.Author = UserController.GetUserByIdInternal(UserContext.UserId);
+                    var auditLog = new Log() { Title = $"Command CreateMessage executed by {user.Name}.", Description = $"UserId: {user.Id}", Timestamp = DateTime.UtcNow };
+                    LogController.AddLog(auditLog);
+                    AddLogToConsole(auditLog);
+                }
             }
         }
         catch (Exception ex)

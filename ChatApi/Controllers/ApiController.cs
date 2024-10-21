@@ -1,4 +1,4 @@
-﻿using ChatAPI.Application.Core;
+﻿using ChatAPI.Application.Commands.Core;
 using ChatAPI.Presenters.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -37,16 +37,16 @@ public class ApiController : ControllerBase
         }
     }
 
-    public ActionResult<IEnumerable<TViewModel>> PresentEnumerable<TResult, TViewModel>(ServiceResult<IEnumerable<TResult>> serviceResult, IPresenter<TViewModel, TResult> presenter)
+    public ActionResult<IEnumerable<TViewModel>> PresentEnumerable<TResult, TViewModel>(CommandResult<IEnumerable<TResult>> serviceResult, IPresenter<TViewModel, TResult> presenter)
     {
         return Present(serviceResult, new EnumerablePresenter<TViewModel, TResult>(presenter));
     }
 
-    public ActionResult<TViewModel> Present<TResult, TViewModel>(ServiceResult<TResult> serviceResult, IPresenter<TViewModel, TResult> presenter)
+    public ActionResult<TViewModel> Present<TResult, TViewModel>(CommandResult<TResult> serviceResult, IPresenter<TViewModel, TResult> presenter)
     {
         switch (serviceResult.StatusCode)
         {
-            case ChatAPI.Domain.Enums.StatusCode.Success:
+            case CommandResultStatusCode.Success:
                 if (serviceResult.Result == null)
                 {
                     return new StatusCodeResult(500);
@@ -56,12 +56,12 @@ public class ApiController : ControllerBase
                     return Ok(presenter.Present(serviceResult.Result));
                 }
 
-            case ChatAPI.Domain.Enums.StatusCode.Error:
+            case CommandResultStatusCode.Error:
                 return new StatusCodeResult(500);
-            case ChatAPI.Domain.Enums.StatusCode.ValidationFailed:
+            case CommandResultStatusCode.ValidationFailed:
                 return ValidationProblem(serviceResult.Message);
-            case ChatAPI.Domain.Enums.StatusCode.NotAuthorized:
-            case ChatAPI.Domain.Enums.StatusCode.NotAuthenticated:
+            case CommandResultStatusCode.NotAuthorized:
+            case CommandResultStatusCode.NotAuthenticated:
             default:
                 return Forbid();
 

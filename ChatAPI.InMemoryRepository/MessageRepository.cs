@@ -4,7 +4,7 @@ using ChatAPI.InMemoryRepository.Data;
 
 namespace ChatAPI.InMemoryRepository;
 
-public class MessageRepository : IMessageRepository
+public class MessageRepository : IMessageRepository, IRepository<Message>
 {
     public IEnumerable<Message> GetAllMessages()
     {

@@ -2,7 +2,7 @@
 
 namespace ChatAPI.Application.Abstractions.Providers;
 
-public interface IConsoleLogger
+public interface ILogProvider
 {
     public void AddLog(Log log);
 }

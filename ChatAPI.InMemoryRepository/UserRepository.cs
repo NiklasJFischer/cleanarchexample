@@ -4,7 +4,7 @@ using ChatAPI.InMemoryRepository.Data;
 
 namespace ChatAPI.InMemoryRepository;
 
-public class UserRepository : IUserRepository
+public class UserRepository : IUserRepository, IRepository<User>
 {
     public bool UserWithIdExists(Guid userId)
     {

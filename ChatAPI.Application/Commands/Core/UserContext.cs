@@ -1,4 +1,4 @@
-﻿namespace ChatAPI.Application.Core;
+﻿namespace ChatAPI.Application.Commands.Core;
 
 public class UserContext
 {

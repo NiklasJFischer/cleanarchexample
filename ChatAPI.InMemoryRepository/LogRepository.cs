@@ -1,10 +1,10 @@
-﻿using ChatAPI.Application.Abstractions.Repositories;
+﻿using ChatAPI.Application.Abstractions.Providers;
 using ChatAPI.Domain.Entities;
 using ChatAPI.InMemoryRepository.Data;
 
 namespace ChatAPI.InMemoryRepository;
 
-public class LogRepository : ILogRepository
+public class LogRepository : ILogProvider, IRepository<Log>
 {
     public void AddLog(Log log)
     {

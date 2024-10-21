@@ -1,0 +1,18 @@
+﻿namespace ChatAPI.Application.Commands.Core;
+
+public abstract class Command(UserContext userContext)
+{
+    public UserContext UserContext { get; set; } = userContext;
+
+    public Command() : this(new UserContext()) { }
+
+    public bool IsLoggedIn
+    {
+        get
+        {
+            return UserContext != null && UserContext.HasUserId;
+        }
+    }
+
+
+}

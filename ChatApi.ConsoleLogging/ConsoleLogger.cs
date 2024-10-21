@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace ChatApi.ConsoleLogging;
 
-public class ConsoleLogger : IConsoleLogger
+public class ConsoleLogger : ILogProvider
 {
     public void AddLog(Log log)
     {

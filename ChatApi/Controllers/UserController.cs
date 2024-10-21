@@ -1,5 +1,4 @@
 ﻿using ChatAPI.Application.Abstractions;
-using ChatAPI.Application.Services;
 using ChatAPI.Presenters;
 using ChatAPI.Presenters.DTO;
 using Microsoft.AspNetCore.Mvc;

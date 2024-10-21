@@ -1,5 +1,4 @@
 ﻿using ChatAPI.Application.Core;
-using ChatAPI.Domain.Entities;
 using ChatAPI.Presenters.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;

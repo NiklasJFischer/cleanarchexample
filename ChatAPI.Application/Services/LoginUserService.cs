@@ -1,11 +1,13 @@
-﻿using ChatAPI.Application.Abstractions;
+﻿using ChatAPI.Application.Abstractions.Providers;
+using ChatAPI.Application.Abstractions.Repositories;
+using ChatAPI.Application.Abstractions.UseCases;
 using ChatAPI.Application.Core;
 using ChatAPI.Domain.Entities;
 using ChatAPI.Domain.Enums;
 
 namespace ChatAPI.Application.Services;
 
-public class UserService(IUserRepository userRepository, IHashProvider hashProvider, ITokenProvider tokenProvider, ILogRepository logRepository, IConsoleLogger consoleLogger, IDateTimeProvider dateTimeProvider) : IUserService
+public class LoginUserService(IUserRepository userRepository, IHashProvider hashProvider, ITokenProvider tokenProvider, ILogRepository logRepository, IConsoleLogger consoleLogger, IDateTimeProvider dateTimeProvider) : ILoginUserService
 {
 
     public ServiceResult<string> LoginUser(UserContext userContext, string email, string password)

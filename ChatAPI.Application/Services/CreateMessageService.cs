@@ -1,0 +1,73 @@
+﻿using ChatAPI.Application.Abstractions.Providers;
+using ChatAPI.Application.Abstractions.Repositories;
+using ChatAPI.Application.Abstractions.UseCases;
+using ChatAPI.Application.Core;
+using ChatAPI.Domain.Entities;
+using ChatAPI.Domain.Enums;
+
+namespace ChatAPI.Application.Services
+{
+    public class CreateMessageService(IMessageRepository messageRepository, IDateTimeProvider dateTimeProvider, IUserRepository userRepository, ILogRepository logRepository, IConsoleLogger consoleLogger) : ICreateMessageService
+    {
+        public ServiceResult<Message> CreateMessage(UserContext userContext, string text)
+        {
+            Message msg = new() { AuthorId = userContext.UserId, Text = text, Created = dateTimeProvider.UtcNow };
+            StatusCode statusCode = StatusCode.Success;
+            string resultMessage = string.Empty;
+
+            try
+            {
+                if (!userContext.HasUserId)
+                {
+                    statusCode = StatusCode.NotAuthenticated;
+                }
+
+                if (statusCode == StatusCode.Success && !userRepository.UserWithIdExists(userContext.UserId))
+                {
+                    statusCode = StatusCode.ValidationFailed;
+                    resultMessage = $"User with id {userContext.UserId} does not exist";
+                }
+
+                Guid id = messageRepository.AddMessage(msg);
+                Message? savedMsg = messageRepository.GetMessageById(id);
+
+                if (savedMsg == null)
+                {
+                    statusCode = StatusCode.Error;
+                    resultMessage = "Message not created";
+                }
+                else
+                {
+                    msg = savedMsg;
+                }
+
+                if (statusCode == StatusCode.Success)
+                {
+                    var user = userRepository.GetUserById(userContext.UserId);
+                    if (user != null)
+                    {
+                        msg.Author = user;
+                        var auditLog = new Log() { Title = $"Command CreateMessage executed by {user.Name}.", Description = $"UserId: {user.Id}", Timestamp = dateTimeProvider.UtcNow };
+                        logRepository.AddLog(auditLog);
+                        consoleLogger.AddLog(auditLog);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                var exLog = new Log() { Title = $"CreateMessage failed with unhandled error.", Description = ex.Message, Timestamp = dateTimeProvider.UtcNow };
+                logRepository.AddLog(exLog);
+                consoleLogger.AddLog(exLog);
+                statusCode = StatusCode.Error;
+                resultMessage = string.Empty;
+            }
+
+            var log = new Log() { Title = $"Command CreateMessage executed.", Description = $"Authenticated: {userContext.HasUserId}, StatusCode: {statusCode}", Timestamp = dateTimeProvider.UtcNow };
+            logRepository.AddLog(log);
+            consoleLogger.AddLog(log);
+
+
+            return new ServiceResult<Message>(msg, statusCode, resultMessage);
+        }
+    }
+}

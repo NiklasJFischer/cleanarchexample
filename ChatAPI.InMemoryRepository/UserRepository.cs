@@ -1,4 +1,4 @@
-﻿using ChatAPI.Application.Abstractions;
+﻿using ChatAPI.Application.Abstractions.Repositories;
 using ChatAPI.Domain.Entities;
 using ChatAPI.InMemoryRepository.Data;
 

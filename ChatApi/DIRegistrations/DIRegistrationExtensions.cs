@@ -1,5 +1,7 @@
 ﻿using ChatApi.ConsoleLogging;
-using ChatAPI.Application.Abstractions;
+using ChatAPI.Application.Abstractions.Providers;
+using ChatAPI.Application.Abstractions.Repositories;
+using ChatAPI.Application.Abstractions.UseCases;
 using ChatAPI.Application.Services;
 using ChatAPI.DateTime;
 using ChatAPI.Hashing;
@@ -26,8 +28,9 @@ namespace ChatApi.DIRegistrations
         }
         private static void AddApplicationServices(this IServiceCollection services)
         {
-            services.AddScoped<IMessageService, MessageService>();
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IGetMessagesService, GetMessagesService>();
+            services.AddScoped<ICreateMessageService, CreateMessageService>();
+            services.AddScoped<ILoginUserService, LoginUserService>();
         }
 
         private static void AddApplicationProviders(this IServiceCollection services)

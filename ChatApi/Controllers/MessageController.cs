@@ -1,5 +1,4 @@
-﻿
-using ChatAPI.Application.Abstractions;
+﻿using ChatAPI.Application.Abstractions.UseCases;
 using ChatAPI.Presenters;
 using ChatAPI.Presenters.DTO;
 using Microsoft.AspNetCore.Authorization;
@@ -9,13 +8,13 @@ namespace ChatApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class MessageController(IMessageService messageService) : ApiController
+public class MessageController(ICreateMessageService createMessageService, IGetMessagesService getMessagesService) : ApiController
 {
 
     [HttpGet(Name = "GetMessages")]
     public ActionResult<IEnumerable<MessageDTO>> Get()
     {
-        return PresentEnumerable(messageService.GetMessages(UserContext), new MessagePresenter());
+        return PresentEnumerable(getMessagesService.GetMessages(UserContext), new MessagePresenter());
 
     }
 
@@ -23,7 +22,7 @@ public class MessageController(IMessageService messageService) : ApiController
     [Authorize()]
     public ActionResult<MessageDTO> CreateMessage(CreateMessageRequest request)
     {
-        return Present(messageService.CreateMessage(UserContext, request.Text), new MessagePresenter());
+        return Present(createMessageService.CreateMessage(UserContext, request.Text), new MessagePresenter());
     }
 
 }

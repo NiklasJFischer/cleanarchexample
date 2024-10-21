@@ -1,4 +1,4 @@
-﻿using ChatAPI.Application.Abstractions;
+﻿using ChatAPI.Application.Abstractions.Providers;
 using ChatAPI.DateTime;
 using ChatAPI.Domain.Entities;
 using Microsoft.IdentityModel.Tokens;

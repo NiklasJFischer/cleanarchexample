@@ -1,4 +1,4 @@
-﻿using ChatAPI.Application.Abstractions;
+﻿using ChatAPI.Application.Abstractions.Providers;
 using ChatAPI.Domain.Entities;
 using System.Diagnostics;
 

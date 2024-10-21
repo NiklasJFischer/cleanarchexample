@@ -1,15 +1,10 @@
 ﻿using ChatApi.ConsoleLogging;
-using ChatApi.ConsoleLogging.Abstractions;
 using ChatAPI.Application.Abstractions;
 using ChatAPI.Application.Services;
 using ChatAPI.DateTime;
-using ChatAPI.DateTime.Abstractions;
 using ChatAPI.Hashing;
-using ChatAPI.Hashing.Abstractions;
 using ChatAPI.InMemoryRepository;
-using ChatAPI.InMemoryRepository.Abstractions;
 using ChatAPI.Tokens;
-using ChatAPI.Tokens.Abstractions;
 
 namespace ChatApi.DIRegistrations
 {

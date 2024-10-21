@@ -1,6 +1,6 @@
 ﻿using ChatAPI.Domain.Entities;
 
-namespace ChatApi.ConsoleLogging.Abstractions;
+namespace ChatAPI.Application.Abstractions;
 
 public interface IConsoleLogger
 {

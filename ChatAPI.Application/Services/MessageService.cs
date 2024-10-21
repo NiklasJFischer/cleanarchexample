@@ -1,10 +1,7 @@
-﻿using ChatApi.ConsoleLogging.Abstractions;
-using ChatAPI.Application.Abstractions;
+﻿using ChatAPI.Application.Abstractions;
 using ChatAPI.Application.Core;
-using ChatAPI.DateTime.Abstractions;
 using ChatAPI.Domain.Entities;
 using ChatAPI.Domain.Enums;
-using ChatAPI.InMemoryRepository.Abstractions;
 
 namespace ChatAPI.Application.Services;
 

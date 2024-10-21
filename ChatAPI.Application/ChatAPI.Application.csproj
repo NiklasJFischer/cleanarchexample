@@ -7,11 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ChatAPI.DateTimeProvider\ChatAPI.DateTime.csproj" />
     <ProjectReference Include="..\ChatAPI.Domain\ChatAPI.Domain.csproj" />
-    <ProjectReference Include="..\ChatAPI.Hashing\ChatAPI.Hashing.csproj" />
-    <ProjectReference Include="..\ChatAPI.InMemoryRepository\ChatAPI.InMemoryRepository.csproj" />
-    <ProjectReference Include="..\ChatAPI.Tokens\ChatAPI.Tokens.csproj" />
   </ItemGroup>
 
 </Project>

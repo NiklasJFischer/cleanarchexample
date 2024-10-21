@@ -1,4 +1,4 @@
-﻿using ChatApi.ConsoleLogging.Abstractions;
+﻿using ChatAPI.Application.Abstractions;
 using ChatAPI.Domain.Entities;
 using System.Diagnostics;
 

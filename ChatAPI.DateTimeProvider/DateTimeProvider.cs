@@ -1,4 +1,4 @@
-﻿using ChatAPI.DateTime.Abstractions;
+﻿using ChatAPI.Application.Abstractions;
 
 namespace ChatAPI.DateTime;
 

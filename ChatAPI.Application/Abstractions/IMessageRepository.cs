@@ -1,6 +1,6 @@
 ﻿using ChatAPI.Domain.Entities;
 
-namespace ChatAPI.InMemoryRepository.Abstractions;
+namespace ChatAPI.Application.Abstractions;
 
 public interface IMessageRepository
 {

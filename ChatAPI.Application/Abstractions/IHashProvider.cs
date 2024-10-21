@@ -1,4 +1,4 @@
-﻿namespace ChatAPI.Hashing.Abstractions;
+﻿namespace ChatAPI.Application.Abstractions;
 
 public interface IHashProvider
 {

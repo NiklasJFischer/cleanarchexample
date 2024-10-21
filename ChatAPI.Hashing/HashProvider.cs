@@ -1,4 +1,4 @@
-﻿using ChatAPI.Hashing.Abstractions;
+﻿using ChatAPI.Application.Abstractions;
 using System.Security.Cryptography;
 
 namespace ChatAPI.Hashing;

@@ -1,6 +1,6 @@
 ﻿using ChatAPI.Domain.Entities;
 
-namespace ChatAPI.Tokens.Abstractions;
+namespace ChatAPI.Application.Abstractions;
 
 public interface ITokenProvider
 {

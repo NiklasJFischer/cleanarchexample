@@ -1,5 +1,5 @@
-﻿using ChatAPI.Domain.Entities;
-using ChatAPI.InMemoryRepository.Abstractions;
+﻿using ChatAPI.Application.Abstractions;
+using ChatAPI.Domain.Entities;
 using ChatAPI.InMemoryRepository.Data;
 
 namespace ChatAPI.InMemoryRepository;

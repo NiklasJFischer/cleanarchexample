@@ -11,7 +11,7 @@ public class UseCaseStatisticsDecorator<TCommand, TResult>(ICommandService<TComm
     {
         var result = decoratee.Execute(command);
 
-        logProvider.AddLog(new Log() { Title = $"Command {command.GetType().Name} executed.", Description = $"Authenticated: {command.IsLoggedIn}, StatusCode: {result.StatusCode}", Timestamp = dateTimeProvider.UtcNow });
+        logProvider.AddLog(new Log() { Title = $"Command {command.GetType().Name} executed.", Description = $"Authenticated: {command.IsLoggedIn}, StatusCode: {result.StatusCode}, Message: {result.Message}", Timestamp = dateTimeProvider.UtcNow });
         return result;
     }
 }

@@ -27,6 +27,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{AAD03BB0-8
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatAPI.Test.UseCases", "..\ChatAPI.Test.UseCases\ChatAPI.Test.UseCases.csproj", "{27FD3D64-8FBE-4E94-9193-DE09D3EA5966}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatAPI.EntityFrameworkRepository", "..\ChatAPI.EntityFrameworkRepository\ChatAPI.EntityFrameworkRepository.csproj", "{38776DF9-ED9B-4A2E-8D24-25DDC18BD8EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,10 @@ Global
 		{27FD3D64-8FBE-4E94-9193-DE09D3EA5966}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27FD3D64-8FBE-4E94-9193-DE09D3EA5966}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27FD3D64-8FBE-4E94-9193-DE09D3EA5966}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38776DF9-ED9B-4A2E-8D24-25DDC18BD8EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38776DF9-ED9B-4A2E-8D24-25DDC18BD8EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38776DF9-ED9B-4A2E-8D24-25DDC18BD8EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38776DF9-ED9B-4A2E-8D24-25DDC18BD8EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,6 +90,7 @@ Global
 		{990F49C0-090E-4E9E-8487-DC0F7A40A1B8} = {DCEC3FF9-AF58-400F-920A-A1D47B916374}
 		{AC8085ED-C4D1-4E49-9ACB-3D08F192BB8F} = {DCEC3FF9-AF58-400F-920A-A1D47B916374}
 		{27FD3D64-8FBE-4E94-9193-DE09D3EA5966} = {AAD03BB0-8DEC-467D-8684-631F76651773}
+		{38776DF9-ED9B-4A2E-8D24-25DDC18BD8EB} = {DCEC3FF9-AF58-400F-920A-A1D47B916374}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8390D557-07F7-4145-8905-E447B9F1A48C}

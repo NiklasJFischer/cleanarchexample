@@ -1,11 +1,14 @@
 ﻿using ChatApi.ConsoleLogging;
 using ChatAPI.Application.Abstractions;
 using ChatAPI.Application.Abstractions.Providers;
+using ChatAPI.Application.Abstractions.Repositories;
 using ChatAPI.Application.Decorators;
 using ChatAPI.DateTime;
+using ChatAPI.EntityFrameworkRepository;
 using ChatAPI.Hashing;
 using ChatAPI.InMemoryRepository;
 using ChatAPI.Tokens;
+using Microsoft.EntityFrameworkCore;
 
 namespace ChatApi.DIRegistrations;
 
@@ -25,6 +28,11 @@ public static class DIRegistrationExtensions
         .AddClasses(classes => classes.AssignableTo(typeof(IRepository<>)))
         .AsImplementedInterfaces()
         .WithScopedLifetime());
+
+        services.AddScoped<IUnitOfWork, EntityFrameworkUnitOfWork>();
+        services.AddDbContext<ChatAPIDbContext>(
+            options => options.UseInMemoryDatabase(databaseName: "MyDB")
+        );
     }
     private static void AddApplicationServices(this IServiceCollection services)
     {
@@ -36,6 +44,7 @@ public static class DIRegistrationExtensions
 
         services.Decorate(typeof(ICommandService<,>), typeof(AuditLogDecorator<,>));
         services.Decorate(typeof(ICommandService<,>), typeof(ExceptionHandlerDecorator<,>));
+        services.Decorate(typeof(ICommandService<,>), typeof(UnitOfWorkDecorator<,>));
         services.Decorate(typeof(ICommandService<,>), typeof(UseCaseStatisticsDecorator<,>));
     }
 
@@ -45,7 +54,11 @@ public static class DIRegistrationExtensions
         services.AddScoped<IDateTimeProvider, DateTimeProvider>();
         services.AddScoped<ITokenProvider, TokenProvider>();
         services.AddScoped<IDateTimeProvider, DateTimeProvider>();
-        services.AddScoped<ILogProvider>(x => new CompositeLogProvider(new ConsoleLogger(), new LogRepository()));
+
+        services.AddScoped<ConsoleLogger>();
+        services.AddScoped<LogRepository>();
+        services.AddScoped<ILogProvider, RegistrationCompositeLogProvider>();
+
         services.AddScoped<IHashProvider, HashProvider>();
         services.AddScoped<IHashProvider, HashProvider>();
     }

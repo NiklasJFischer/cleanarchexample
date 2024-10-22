@@ -2,6 +2,8 @@
 
 public abstract class Command(UserContext userContext)
 {
+    public abstract bool IsWriteCommand { get; }
+
     public UserContext UserContext { get; set; } = userContext;
 
     public Command() : this(new UserContext()) { }

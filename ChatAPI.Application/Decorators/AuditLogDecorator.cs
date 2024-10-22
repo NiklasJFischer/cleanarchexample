@@ -12,6 +12,11 @@ public class AuditLogDecorator<TCommand, TResult>(ICommandService<TCommand, TRes
     {
         var result = decoratee.Execute(command);
 
+        if (!command.IsWriteCommand)
+        {
+            return result;
+        }
+
         if (!command.IsLoggedIn)
         {
             return result;

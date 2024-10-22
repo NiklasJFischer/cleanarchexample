@@ -6,4 +6,6 @@ public class LoginUserCommand(UserContext userContext, string email, string pass
 {
     public string Email { get; set; } = email;
     public string Password { get; set; } = password;
+
+    public override bool IsWriteCommand => false;
 }

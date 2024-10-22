@@ -7,7 +7,7 @@ using ChatAPI.Domain.Entities;
 
 namespace ChatAPI.Application.Services;
 
-public class CreateMessageService(IMessageRepository messageRepository, IDateTimeProvider dateTimeProvider, IUserRepository userRepository) : UseCase<Message>, ICommandService<CreateMessageCommand, Message>
+public class CreateMessageService(IUnitOfWork unitOfWork, IMessageRepository messageRepository, IDateTimeProvider dateTimeProvider, IUserRepository userRepository) : UseCase<Message>, ICommandService<CreateMessageCommand, Message>
 {
     public CommandResult<Message> Execute(CreateMessageCommand command)
     {
@@ -23,14 +23,15 @@ public class CreateMessageService(IMessageRepository messageRepository, IDateTim
 
         Message msg = new() { AuthorId = command.UserContext.UserId, Text = command.Text, Created = dateTimeProvider.UtcNow };
         var id = messageRepository.AddMessage(msg);
+        unitOfWork.SaveChanges();
 
-        Message? savedMsg = messageRepository.GetMessageById(id);
+        var savedMessage = messageRepository.GetMessageById(id);
 
-        if (savedMsg == null)
+        if (savedMessage == null)
         {
             return Error("Message not created");
         }
 
-        return Success(savedMsg);
+        return Success(savedMessage);
     }
 }

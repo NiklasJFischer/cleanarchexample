@@ -8,16 +8,18 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.10" />
     <PackageReference Include="Scrutor" Version="5.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ChatAPI.Application\ChatAPI.Application.csproj" />
+    <ProjectReference Include="..\ChatApi.ConsoleLogging\ChatApi.ConsoleLogging.csproj" />
     <ProjectReference Include="..\ChatAPI.DateTimeProvider\ChatAPI.DateTime.csproj" />
     <ProjectReference Include="..\ChatAPI.Domain\ChatAPI.Domain.csproj" />
+    <ProjectReference Include="..\ChatAPI.EntityFrameworkRepository\ChatAPI.EntityFrameworkRepository.csproj" />
     <ProjectReference Include="..\ChatAPI.Hashing\ChatAPI.Hashing.csproj" />
-    <ProjectReference Include="..\ChatAPI.InMemoryRepository\ChatAPI.InMemoryRepository.csproj" />
     <ProjectReference Include="..\ChatAPI.Presenters\ChatAPI.Presenters.csproj" />
     <ProjectReference Include="..\ChatAPI.Tokens\ChatAPI.Tokens.csproj" />
   </ItemGroup>

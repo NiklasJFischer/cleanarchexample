@@ -14,6 +14,7 @@ namespace ChatAPI.Test.UseCases
             var messageRepository = new TestMessageRepository();
             var dateTimeProvider = new TestDateTimeProvider();
             var userRepository = new TestUserRepository();
+            var unitOfWork = new TestUnitOfWork();
 
             //data
             var userId = userRepository.Add(new Domain.Entities.User());
@@ -23,7 +24,7 @@ namespace ChatAPI.Test.UseCases
             CreateMessageCommand command = new CreateMessageCommand(userContext, "Testar nytt meddelande");
 
             //test
-            CreateMessageService service = new CreateMessageService(messageRepository, dateTimeProvider, userRepository);
+            CreateMessageService service = new CreateMessageService(unitOfWork, messageRepository, dateTimeProvider, userRepository);
             var result = service.Execute(command);
 
             Assert.NotNull(result);

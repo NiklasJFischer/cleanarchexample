@@ -1,6 +1,6 @@
 ﻿namespace ChatAPI.Domain.Entities;
 
-public class Message
+public class Message : IEntity
 {
     public Guid Id { get; set; }
     public string Text { get; set; } = default!;

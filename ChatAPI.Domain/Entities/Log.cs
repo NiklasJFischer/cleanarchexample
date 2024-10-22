@@ -1,6 +1,6 @@
 ﻿namespace ChatAPI.Domain.Entities;
 
-public class Log
+public class Log : IEntity
 {
     public Guid Id { get; set; }
     public string Title { get; set; } = default!;

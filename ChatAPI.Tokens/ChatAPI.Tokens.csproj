@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ChatAPI.Application\ChatAPI.Application.csproj" />
+    <ProjectReference Include="..\ChatAPI.DateTimeProvider\ChatAPI.DateTime.csproj" />
+    <ProjectReference Include="..\ChatAPI.Domain\ChatAPI.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
